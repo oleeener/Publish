@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Stock Market Performance</title>
+    <style>
+      body {
+        font-family: 'OpenSans', sans-serif;
+        font-weight: 500;
+        color: #2e2e2e;
+      }    
+      line {
+        stroke: gray;
+      }
+
+      line#limitx, line#limity {
+        stroke: #FED966;
+        stroke-width: 3;
+        stroke-dasharray: 3 6;
+      }
+      .bar {
+        fill: #80cbc4;
+      }            
+      .hide {
+        display: none;
+      }      
+      .info_box_col {
+        height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="container-fluid">
+      <div class='row'>
+        <div class='col-2'>
+          <div class='row'>
+            <div class="form-group">
+              <label for="sel_data_column">Metrics: </label>
+              <select id='sel_data_column'>
+                <option value="close" selected>Close</option>
+                <option value="open">Open</option>
+                <option value="volume">Volume</option>
+              </select>   
+            </div>
+          </div>
+        </div>
+        <div class='col-5'>
+          <div class='row'>
+            <h1 id='graph_title' class="h2"></h1>
+            <div class="form-group">
+              <label for="sel_symbol1">Symbol: </label>
+              <select id='sel_symbol1' class='sel_symbol'>
+              </select>   
+            </div>   
+          </div>      
+          <div class='row'>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input sel_data_year1" name="sel_data_year1" type="checkbox" value="2019">
+              <label class="form-check-label" for="">2019</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input sel_data_year1" name="sel_data_year1" type="checkbox" value="2018">
+              <label class="form-check-label" for="">2018</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input sel_data_year1" name="sel_data_year1" type="checkbox" value="2017">
+              <label class="form-check-label" for="">2017</label>
+            </div>   
+            <div class="form-check form-check-inline">
+              <input class="form-check-input sel_data_year1" name="sel_data_year1" type="checkbox" value="2016">
+              <label class="form-check-label" for="">2016</label>
+            </div>  
+          </div>     
+          <div class='row'>
+            <div id = 'chart1'></div>
+          </div>
+        </div>
+        <div class='col-5'>
+          <div class='row'>
+            <h1 id='graph_title2' class="h2"></h1>
+            <div class="form-group">
+              <label for="sel_symbol2">Symbol: </label>
+              <select id='sel_symbol2' class='sel_symbol'>
+              </select>   
+            </div>   
+          </div>      
+          <div class='row'>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input sel_data_year2" name="sel_data_year2" type="checkbox" value="2019">
+              <label class="form-check-label" for="">2019</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input sel_data_year2" name="sel_data_year2" type="checkbox" value="2018">
+              <label class="form-check-label" for="">2018</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input sel_data_year2" name="sel_data_year2" type="checkbox" value="2017">
+              <label class="form-check-label" for="">2017</label>
+            </div>   
+            <div class="form-check form-check-inline2">
+              <input class="form-check-input sel_data_year" name="sel_data_yea2r" type="checkbox" value="2016">
+              <label class="form-check-label" for="">2016</label>
+            </div>  
+          </div>     
+          <div class='row'>
+            <div id = 'chart2'></div>
+          </div>
+        </div>  
+      </div>
+    </div>
+
+   <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/d3.min.js"></script>  
+
+    <script>
+      //function graph() {
+        var data = [{"date":"2016-01","close":19683.109375,"open":19138.419922,"volume":2028269520.0,"symbol":"HSI"},{"date":"2016-02","close":19111.929688,"open":19366.169922,"volume":1591788666.6666667461,"symbol":"HSI"},{"date":"2016-03","close":20776.699219,"open":20811.460938,"volume":1622262347.6190476418,"symbol":"HSI"},{"date":"2016-04","close":21067.050781,"open":21215.199219,"volume":1532826130.0,"symbol":"HSI"},{"date":"2016-05","close":20815.089844,"open":20617.330078,"volume":1540283004.7619047165,"symbol":"HSI"},{"date":"2016-06","close":20794.369141,"open":20736.849609,"volume":1858174061.9047617912,"symbol":"HSI"},{"date":"2016-07","close":21891.369141,"open":22055.949219,"volume":1585690875.0,"symbol":"HSI"},{"date":"2016-08","close":22976.880859,"open":23043.080078,"volume":1755529621.739130497,"symbol":"HSI"},{"date":"2016-09","close":23297.150391,"open":23435.289063,"volume":1891819400.0,"symbol":"HSI"},{"date":"2016-10","close":22934.539063,"open":22845.820313,"volume":1369981645.0,"symbol":"HSI"},{"date":"2016-11","close":22789.769531,"open":22842.359375,"volume":1587715668.1818182468,"symbol":"HSI"},{"date":"2016-12","close":22000.560547,"open":21818.910156,"volume":1766831500.0,"symbol":"HSI"},{"date":"2017-01","close":23360.779297,"open":23339.150391,"volume":1359095568.4210526943,"symbol":"HSI"},{"date":"2017-02","close":23740.730469,"open":23952.640625,"volume":2061185740.0,"symbol":"HSI"},{"date":"2017-03","close":24111.589844,"open":24305.529297,"volume":1843005834.7826087475,"symbol":"HSI"},{"date":"2017-04","close":24615.130859,"open":24691.289063,"volume":1639074147.0588235855,"symbol":"HSI"},{"date":"2017-05","close":25660.650391,"open":25706.449219,"volume":1699947585.0,"symbol":"HSI"},{"date":"2017-06","close":25764.580078,"open":25679.640625,"volume":1632103172.7272727489,"symbol":"HSI"},{"date":"2017-07","close":27323.990234,"open":27048.449219,"volume":1770335847.6190476418,"symbol":"HSI"},{"date":"2017-08","close":27970.300781,"open":27934.449219,"volume":2139227513.0434782505,"symbol":"HSI"},{"date":"2017-09","close":27554.300781,"open":27492.130859,"volume":1619363190.476190567,"symbol":"HSI"},{"date":"2017-10","close":28245.539063,"open":28247.0,"volume":1822656920.0,"symbol":"HSI"},{"date":"2017-11","close":29177.349609,"open":29340.269531,"volume":1921109072.7272727489,"symbol":"HSI"},{"date":"2017-12","close":29919.150391,"open":29914.050781,"volume":1779809689.4736843109,"symbol":"HSI"},{"date":"2018-01","close":32887.269531,"open":32435.759766,"volume":2973770177.2727274895,"symbol":"HSI"},{"date":"2018-02","close":30844.720703,"open":31037.410156,"volume":2888096616.6666665077,"symbol":"HSI"},{"date":"2018-03","close":30093.380859,"open":30154.179688,"volume":2117076914.2857143879,"symbol":"HSI"},{"date":"2018-04","close":30808.449219,"open":30530.400391,"volume":1834139078.9473683834,"symbol":"HSI"},{"date":"2018-05","close":30468.560547,"open":30274.179688,"volume":1802676257.1428570747,"symbol":"HSI"},{"date":"2018-06","close":28955.109375,"open":28463.849609,"volume":2129997490.0,"symbol":"HSI"},{"date":"2018-07","close":28583.009766,"open":28663.140625,"volume":1792651395.2380952835,"symbol":"HSI"},{"date":"2018-08","close":27888.550781,"open":27798.210938,"volume":1630783286.9565217495,"symbol":"HSI"},{"date":"2018-09","close":27788.519531,"open":27879.060547,"volume":1869968068.4210526943,"symbol":"HSI"},{"date":"2018-10","close":24979.689453,"open":24752.830078,"volume":1962877004.7619047165,"symbol":"HSI"},{"date":"2018-11","close":26506.75,"open":26506.089844,"volume":1589632204.5454545021,"symbol":"HSI"},{"date":"2018-12","close":25845.699219,"open":25732.519531,"volume":1572421663.1578948498,"symbol":"HSI"},{"date":"2019-01","close":27942.470703,"open":27842.050781,"volume":1753688090.9090909958,"symbol":"HSI"},{"date":"2019-02","close":28633.179688,"open":28719.710938,"volume":1848358605.882352829,"symbol":"HSI"},{"date":"2019-03","close":29051.359375,"open":28812.640625,"volume":1765641480.9523808956,"symbol":"HSI"},{"date":"2019-04","close":29699.109375,"open":29828.150391,"volume":1864862794.7368421555,"symbol":"HSI"},{"date":"2019-05","close":26901.089844,"open":27002.960938,"volume":2129737066.6666667461,"symbol":"HSI"},{"date":"2019-06","close":28542.619141,"open":28632.589844,"volume":1761902021.0526316166,"symbol":"HSI"},{"date":"2019-07","close":27777.75,"open":27931.279297,"volume":1174238059.0909090042,"symbol":"HSI"},{"date":"2019-08","close":25724.730469,"open":26011.640625,"volume":1904691390.9090909958,"symbol":"HSI"},{"date":"2019-09","close":26092.269531,"open":25844.710938,"volume":1663394328.5714285374,"symbol":"HSI"},{"date":"2019-10","close":26906.720703,"open":26708.449219,"volume":1501377061.9047617912,"symbol":"HSI"},{"date":"2019-11","close":26346.490234,"open":26705.380859,"volume":1520746414.2857143879,"symbol":"HSI"},{"date":"2019-12","close":28189.75,"open":28241.429688,"volume":1327250810.0,"symbol":"HSI"},{"date":"2016-01","close":97.339996,"open":94.790001,"volume":66939368.4210526347,"symbol":"AAPL"},{"date":"2016-02","close":96.690002,"open":96.860001,"volume":40543130.0,"symbol":"AAPL"},{"date":"2016-03","close":108.989998,"open":109.720001,"volume":33911345.4545454532,"symbol":"AAPL"},{"date":"2016-04","close":93.739998,"open":93.989998,"volume":41542080.9523809552,"symbol":"AAPL"},{"date":"2016-05","close":99.860001,"open":99.599998,"volume":42889119.0476190448,"symbol":"AAPL"},{"date":"2016-06","close":95.599998,"open":94.440002,"volume":35431713.636363633,"symbol":"AAPL"},{"date":"2016-07","close":104.209999,"open":104.190002,"volume":34288980.0,"symbol":"AAPL"},{"date":"2016-08","close":106.099998,"open":105.660004,"volume":27396891.3043478243,"symbol":"AAPL"},{"date":"2016-09","close":113.050003,"open":112.459999,"volume":46095980.9523809552,"symbol":"AAPL"},{"date":"2016-10","close":113.540001,"open":113.650002,"volume":32710204.7619047612,"symbol":"AAPL"},{"date":"2016-11","close":110.519997,"open":111.599998,"volume":34359761.904761903,"symbol":"AAPL"},{"date":"2016-12","close":115.82,"open":116.650002,"volume":28989128.5714285709,"symbol":"AAPL"},{"date":"2017-01","close":121.349998,"open":121.150002,"volume":28156100.0,"symbol":"AAPL"},{"date":"2017-02","close":136.990005,"open":137.080002,"volume":30261505.263157893,"symbol":"AAPL"},{"date":"2017-03","close":143.660004,"open":143.720001,"volume":24418626.0869565234,"symbol":"AAPL"},{"date":"2017-04","close":143.649994,"open":144.089996,"volume":19647584.2105263174,"symbol":"AAPL"},{"date":"2017-05","close":152.759995,"open":153.970001,"volume":29726445.4545454532,"symbol":"AAPL"},{"date":"2017-06","close":144.020004,"open":144.449997,"volume":31099004.5454545468,"symbol":"AAPL"},{"date":"2017-07","close":148.729996,"open":149.899994,"volume":21100595.0,"symbol":"AAPL"},{"date":"2017-08","close":164.0,"open":163.639999,"volume":28742130.4347826093,"symbol":"AAPL"},{"date":"2017-09","close":154.119995,"open":153.210007,"volume":34018705.0,"symbol":"AAPL"},{"date":"2017-10","close":169.039993,"open":167.899994,"volume":22922331.8181818165,"symbol":"AAPL"},{"date":"2017-11","close":171.850006,"open":170.429993,"volume":28603019.0476190485,"symbol":"AAPL"},{"date":"2017-12","close":169.229996,"open":170.520004,"volume":26559190.0,"symbol":"AAPL"},{"date":"2018-01","close":167.429993,"open":166.869995,"volume":31413304.7619047612,"symbol":"AAPL"},{"date":"2018-02","close":178.119995,"open":179.259995,"volume":48836542.1052631587,"symbol":"AAPL"},{"date":"2018-03","close":167.779999,"open":167.809998,"volume":33987033.3333333358,"symbol":"AAPL"},{"date":"2018-04","close":165.259995,"open":162.130005,"volume":31721633.3333333321,"symbol":"AAPL"},{"date":"2018-05","close":186.869995,"open":187.220001,"volume":28226195.4545454532,"symbol":"AAPL"},{"date":"2018-06","close":185.110001,"open":186.289993,"volume":25124976.1904761903,"symbol":"AAPL"},{"date":"2018-07","close":190.289993,"open":190.300003,"volume":18747209.5238095224,"symbol":"AAPL"},{"date":"2018-08","close":227.630005,"open":226.509995,"volume":30448647.826086957,"symbol":"AAPL"},{"date":"2018-09","close":225.740005,"open":224.789993,"volume":35735368.4210526347,"symbol":"AAPL"},{"date":"2018-10","close":218.860001,"open":216.880005,"volume":34336891.304347828,"symbol":"AAPL"},{"date":"2018-11","close":178.580002,"open":180.289993,"volume":45777447.6190476194,"symbol":"AAPL"},{"date":"2018-12","close":157.740005,"open":158.529999,"volume":47311710.5263157859,"symbol":"AAPL"},{"date":"2019-01","close":166.440002,"open":166.110001,"volume":39432733.3333333358,"symbol":"AAPL"},{"date":"2019-02","close":173.149994,"open":174.320007,"volume":24870557.8947368413,"symbol":"AAPL"},{"date":"2019-03","close":189.949997,"open":189.830002,"volume":30999114.2857142873,"symbol":"AAPL"},{"date":"2019-04","close":200.669998,"open":203.059998,"volume":24100842.8571428582,"symbol":"AAPL"},{"date":"2019-05","close":175.070007,"open":176.229996,"volume":33611663.636363633,"symbol":"AAPL"},{"date":"2019-06","close":197.919998,"open":198.679993,"volume":25759365.0,"symbol":"AAPL"},{"date":"2019-07","close":213.039993,"open":216.419998,"volume":21542886.3636363633,"symbol":"AAPL"},{"date":"2019-08","close":208.740005,"open":210.160004,"volume":30957936.3636363633,"symbol":"AAPL"},{"date":"2019-09","close":223.970001,"open":220.899994,"volume":27128355.0,"symbol":"AAPL"},{"date":"2019-10","close":248.759995,"open":247.240005,"volume":26447943.478260871,"symbol":"AAPL"},{"date":"2019-11","close":267.25,"open":266.600006,"volume":22416575.0,"symbol":"AAPL"},{"date":"2019-12","close":293.649994,"open":289.929993,"volume":28438033.3333333321,"symbol":"AAPL"}];
+
+        // update selection box based on data
+        d3.selectAll('.sel_symbol')
+          .selectAll('.sel_symbol_option')
+          .data(d3.map(data, function(d){return d.symbol;}).keys())
+          .enter()
+          .append('option')
+          .attr('class','sel_symbol_option')
+          .attr('value',function(d){return d})
+          .text(function(d) {return d})
+          .property('selected',function(d,i){
+            if ((this.parentNode.id == 'sel_symbol1') && (i == 0)) return true
+            else if ((this.parentNode.id == 'sel_symbol2') && (i == 1)) return true
+            else return false
+          })
+
+        var margin = {top: 20, right: 30, bottom: 50, left: 100};
+        var width = 760 - margin.left - margin.right;
+        var height = 400 - margin.top - margin.bottom;
+
+        var svg1 = d3.select("#chart1")
+          .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform",
+                  "translate(" + margin.left + "," + margin.top + ")");    
+
+        var svg2 = d3.select("#chart2")
+          .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform",
+                  "translate(" + margin.left + "," + margin.top + ")");              
+
+        function updateField(data,field,svg) {
+          var xScale = d3.scaleBand()
+            .range([0, width])
+            .domain(data.map(function (s) {return s.date}))
+            .padding(0.4)
+
+          svg.selectAll('g.xaxis')
+            .remove()            
+
+          svg.append('g')
+            .attr('class', 'xaxis')
+            .attr('transform', `translate(0, ${height})`)
+            .call(d3.axisBottom(xScale))
+            .selectAll("text")
+            .attr("y", 0)
+            .attr("x", 9)
+            //.attr("dy", ".35em")
+            .attr("class", function(d){
+              //console.log(d.indexOf('-01')==4)
+              if ((d.indexOf('-01')==4) || (d.indexOf('-04')==4) || (d.indexOf('-07')==4) || (d.indexOf('-10')==4))
+                return '';
+              else
+                return 'hide';
+            })
+            .attr("dx", "-1.5em")
+            .attr("dy", "0.3em")            
+            .attr("transform", "rotate(-90)")
+            .style("text-anchor", "end");
+
+          var field_max = d3.max(data, function(d) {return d[field]});
+          var field_round = Math.pow(10,Math.floor(Math.log10(field_max)));
+
+          var yScale = d3.scaleLinear()
+            .range([height, 0])
+            .domain([0, Math.ceil(field_max/field_round)*field_round]);
+
+          svg.selectAll('g.yaxis')
+            .remove()
+
+          svg.append('g')
+            .attr('class', 'yaxis')
+            .call(d3.axisLeft(yScale));   
+
+          var barGroups = svg.selectAll('g.bar')
+            .remove()
+            .exit()
+            .data(data)
+            .enter()
+            .append('g')
+            .attr('class','bar')
+
+          barGroups
+            .append('rect')
+            .attr('class', 'bar')          
+            .attr('x', (g) => xScale(g.date))
+            .attr('y', (g) => yScale(g[field]))
+            .attr('height', (g) => height - yScale(g[field]))
+            .attr('width', xScale.bandwidth())
+            .on('mouseenter', function (actual, i) {
+              var y = yScale(actual[field])
+              var x = xScale(actual.date)
+
+              yline = svg.append('line')
+                .attr('id', 'limity')
+                .attr('x1', 0)
+                .attr('y1', y)
+                .attr('x2', width)
+                .attr('y2', y)
+
+              xline = svg.append('line')
+                .attr('id', 'limitx')
+                .attr('x1', x)
+                .attr('y1', 0)
+                .attr('x2', x)
+                .attr('y2', height)              
+
+              // update info box
+              // d3.select('#info_symbol')
+              //   .text('Symbol: ' + actual.symbol)              
+              // d3.select('#info_date')
+              //   .text('Date: ' + actual.date)
+              // d3.select('#info_open')
+              //   .text('Open: ' + actual.open.toFixed(0))     
+              // d3.select('#info_close')
+              //   .text('Close: ' + actual.close.toFixed(0)) 
+              // d3.select('#info_volume')
+              //   .text('Avg Volume: ' + (actual.volume/1000000).toFixed(0) + 'M')                                            
+            })
+            .on('mouseleave', function () {
+              svg.selectAll('#limitx').remove()
+              svg.selectAll('#limity').remove()
+              // clear info box
+              //d3.selectAll('.info_box').text('')
+            });
+          }
+
+          function filterData(svg,i) {
+              // find all checked year
+              var sel_data_year = [];
+              $.each($("input[name='sel_data_year"+i+"']:checked"), function(){
+                sel_data_year.push($(this).val());
+              });      
+
+              // get data column
+              var col = $('#sel_data_column').find(":selected").val()
+
+              // get symbol
+              var sym = $('#sel_symbol'+i).find(":selected").val()
+
+              var bReset = sel_data_year.length == 0;
+
+              // create filtered data
+              new_data = data.filter(function(d) { 
+                return (bReset || sel_data_year.includes(d.date.substr(0,4))) && (d.symbol == sym);
+              });
+
+              //console.log(new_data)
+
+              // call update
+              updateField(new_data,col,svg) 
+
+              // update title
+              d3.select('#graph_title')
+                .text('')
+          }
+
+          // listener
+          d3.select('#sel_data_column').
+              on('change', function() {
+                filterData(svg1,1);
+                filterData(svg2,2);
+              })
+          d3.select('#sel_symbol1').
+              on('change', function() {
+                filterData(svg1,1);
+              }) 
+          d3.select('#sel_symbol2').
+              on('change', function() {
+                filterData(svg2,2);
+              })                            
+          d3.selectAll('.sel_data_year1').
+            on('click', function() {
+              filterData(svg1,1);
+            })
+          d3.selectAll('.sel_data_year2').
+            on('click', function() {
+              filterData(svg2,2);
+            })            
+
+          // init
+          //updateField(data,'close')
+          filterData(svg1,1)
+          filterData(svg2,2)
+
+      //}
+      //graph()
+    </script>          
+  </body>
+</html>
