@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Title</title>
+    <style>
+      body {
+        font-family: 'OpenSans', sans-serif;
+        font-weight: 500;
+        color: #2e2e2e;
+      }    
+      body a {
+        color: #2e2e2e;
+      }
+      .navbar {
+        height: 60px;
+        border-bottom: 2px solid #ececec;
+        background-color: rgba(255,255,255,0.95);        
+      }  
+      .navbar-brand span {
+        padding-left: 10px;
+      }
+      .navbar-collapse.show {
+        background-color: #ffffff;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        padding-left: 1rem;
+        margin-right: -15px;
+        margin-left: -15px;        
+      }
+      .sidebar {
+        z-index: 100;
+        padding: 0.5rem;
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+        background-color: #f3f3f3;
+      }
+
+      line {
+        stroke: gray;
+      }
+
+      line#limitx, line#limity {
+        stroke: #FED966;
+        stroke-width: 3;
+        stroke-dasharray: 3 6;
+      }
+
+      .hide {
+        display: none;
+      }         
+    </style>
+  </head>
+  <body>
+  <nav class="navbar sticky-top navbar-light navbar-expand-md">
+    <a class="navbar-brand" href="#">
+      <img src="" alt=""><span>Dashboard</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Active Tab</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Tab 1</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Tab 2</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Tab 3</a>
+        </li>
+      </ul>
+      <span class="navbar-text">
+        Data as of 9 Jan 2020
+      </span>      
+      <ul class="navbar-nav my-2 my-lg-0">    
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <svg class="bi bi-gear" width="30px" height="30px" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M10.837 3.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 016.377 5.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 01-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 011.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 012.692 1.115l.094.319c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 012.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 011.115-2.693l.319-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 01-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159a1.873 1.873 0 01-2.693-1.115l-.094-.319zm-2.633-.283c.527-1.79 3.064-1.79 3.592 0l.094.319a.873.873 0 001.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 00.52 1.255l.319.094c1.79.527 1.79 3.064 0 3.592l-.319.094a.873.873 0 00-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 00-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 00-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 00-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 00.52-1.255l-.16-.292c-.892-1.64.901-3.433 2.541-2.54l.292.159a.873.873 0 001.255-.52l.094-.319z" clip-rule="evenodd"></path>
+              <path fill-rule="evenodd" d="M10 7.754a2.246 2.246 0 100 4.492 2.246 2.246 0 000-4.492zM6.754 10a3.246 3.246 0 116.492 0 3.246 3.246 0 01-6.492 0z" clip-rule="evenodd"></path>
+            </svg>            
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>  
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-10 ml-auto">
+          <div class="row">
+            Left
+            <div class="col-6" id='chart1'>
+              
+            </div>
+            Right
+            <div class="col" id='chart2'>
+              
+            </div>
+          </div>
+      </div>      
+      <nav class="col-2 sidebar">
+        <div class="sidebar-sticky">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary" id=''>
+              <input type="radio" name="filter_groups" id="filter_group1" autocomplete="off" checked> Comments
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="filter_groups" id="filter_group2" autocomplete="off"> Radio
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="filter_groups" id="filter_group3" autocomplete="off"> Radio
+            </label>
+          </div>
+        </div>
+      </nav>
+
+    </div>
+    
+  </div>
+    
+
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/d3.min.js"></script>  
+
+  <script src="js/data.js"></script>  
+
+  <script>
+    // group by mth
+    var data = d3.nest()
+      .key(function(d) {return d.comments_disabled})    
+      .key(function(d) {return d.publish_mth})
+      //.rollup(function(v) { return v.length; })
+      .rollup(function(v) { return {
+          count: v.length,
+          total_likes: d3.sum(v, function(d) { return d.likes; })
+        }
+      })
+      .entries(raw_data);
+
+    // graph
+    var chart = '#chart1';
+
+    var margin = {top: 10, right: 20, bottom: 50, left: 50},
+        width = $(chart).width() - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;    
+
+    var svg = d3.select(chart)
+      .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform","translate(" + margin.left + "," + margin.top + ")");        
+
+    var max_y = d3.max(data, function(row) {
+        return d3.max(row.values, function(column) {
+          return column.value['total_likes']
+        });
+      });
+
+    var zScale = d3.scaleOrdinal()
+      .domain(data.map(function (d) {return d.key}))
+      .range(d3.schemeSet2);
+
+    var xScale = d3.scaleBand()
+      .range([0, width])
+      .domain(data.map(function (s) {return s.key}))
+
+    var yScale = d3.scaleLinear()
+      .domain([0, max_y])
+      .range([ height, 0 ]);      
+
+    svg.selectAll('g.xaxis')
+      .remove()            
+
+    svg.append('g')
+      .attr('class', 'xaxis')
+      .attr('transform', `translate(0, ${height})`)
+      .call(d3.axisBottom(xScale))
+      .selectAll("text")
+      .attr("y", 0)
+      .attr("x", 9)
+      .attr("dx", "-1.5em")
+      .attr("dy", "0.3em")   
+      .attr("class", function(d){
+        if ((d.indexOf('-01')==4) || (d.indexOf('-04')==4) || (d.indexOf('-07')==4) || (d.indexOf('-10')==4))
+          return '';
+        else
+          return 'hide';
+      })               
+      .attr("transform", "rotate(-90)")
+      .style("text-anchor", "end");
+
+    svg.selectAll('g.yaxis')
+      .remove()
+
+    svg.append('g')
+      .attr('class', 'yaxis')
+      .call(d3.axisLeft(yScale).tickFormat(function(d){return d/1000000 + "M"}));
+
+    // Add the line
+    var line = d3.line()
+        .x(function(d) { return xScale(d.key) })
+        .y(function(d) { return yScale(d.value['avg_likes']) })
+
+    svg.selectAll('line')
+      .data(data)
+      .enter()
+      .append("path")
+      //.datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 1.5)
+      .attr("class", function(d){ return d.key})
+      .attr("d", function(d) {return line(d.values)})
+
+    // svg.selectAll("dot")
+    //   .data(data)
+    //   .enter()
+    //   .append("circle")
+    //   .attr("r", 3)
+    //   .attr("cx", function(d) { return xScale(d.key); })
+    //   .attr("cy", function(d) { return yScale(d.value['avg_likes']); })
+    //   .style("fill",'#FF7F0E')      
+    //   .on('mouseenter', function (actual, i) {
+    //     var x = xScale(actual.key)
+    //     var y = yScale(actual.value['avg_likes'])
+
+    //     svg.append('line')
+    //       .attr('id', 'limitx')
+    //       .attr('x1', 0)
+    //       .attr('y1', y)
+    //       .attr('x2', width)
+    //       .attr('y2', y)
+
+    //     svg.append('line')
+    //       .attr('id', 'limity')
+    //       .attr('x1', x)
+    //       .attr('y1', 0)
+    //       .attr('x2', x)
+    //       .attr('y2', height)          
+    //     })
+    //   .on('mouseleave', function () {
+    //     svg.selectAll('#limitx').remove()
+    //     svg.selectAll('#limity').remove()
+    //   }); 
+
+      $( window ).resize(function() {
+        //console.log('reload graph')
+      });
+  </script>    
+  </body>
+</html>
