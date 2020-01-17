@@ -47,6 +47,7 @@ ready(dataGeo,data)
 
 function ready(dataGeo, data) {
   console.log(data)
+  var centered;
   // Create a color scale
   var allContinent = d3.map(data, function(d){return(d.name)}).keys()
   var color = d3.scaleOrdinal()
@@ -66,19 +67,47 @@ function ready(dataGeo, data) {
       .data(dataGeo.features)
       .enter()
       .append("path")
+        //.attr('class')
         .attr("fill", "#b8b8b8")
         .attr("d", d3.geoPath()
             .projection(projection)
         )
-      .style("stroke", "none")
+      .style("stroke", "#fff")
       .style("opacity", .3)
+      .on("click", function(d) {
+        // console.log(d)
+        // if (d && centered !== d) {
+        //   var centroid = d3.geoPath()
+        //                     .projection(projection)
+        //                     .centroid(d);
+        //   x = centroid[0];
+        //   y = centroid[1];
+        //   k = 4;
+        //   centered = d;
+        // } else {
+        //   x = width / 2;
+        //   y = height / 2;
+        //   k = 1;
+        //   centered = null;
+        // }
+
+        // svg.selectAll("g path")
+        //     .classed("active", centered && function(d) { return d === centered; });
+
+        // svg.selectAll("g")
+        //     .transition()
+        //     .duration(750)
+        //     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+        //     .style("stroke-width", 1.5 / k + "px");   
+      })
 
   // Add circles:
   svg
-    .selectAll("myCircles")
+    .selectAll(".data_circle")
     .data(data.sort(function(a,b) { return +b.n - +a.n }).filter(function(d,i){ return i<1000 }))
     .enter()
     .append("circle")
+      .attr('class','data_circle')
       .attr("cx", function(d){ return projection([+d.longitude, +d.latitude])[0] })
       .attr("cy", function(d){ return projection([+d.longitude, +d.latitude])[1] })
       .attr("r", function(d){ return size(+d.n) })
